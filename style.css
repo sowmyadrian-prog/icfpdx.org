@@ -1,0 +1,501 @@
+/***********************
+ * FONT & ROOT VARIABLES
+ ***********************/
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+:root {
+  /* Font Families */
+  --font-heading: "Merriweather", serif;
+  --font-body: "Montserrat", sans-serif;
+
+  /* Default (Winter) Color Theme */
+  --primary-color: #2c3e50; /* Dark Slate Blue */
+  --secondary-color: #3498db; /* Bright Blue */
+  --accent-color: #e74c3c; /* Festive Red */
+  --background-color: #ecf0f1; /* Light Gray */
+  --surface-color: #ffffff; /* White */
+  --text-color: #34495e; /* Dark Gray-Blue */
+  --text-light-color: #ffffff;
+  --border-color: #bdc3c7;
+
+  /* Sizing & Effects */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s ease;
+}
+
+/***********************
+ * SEASONAL THEMES
+ ***********************/
+/* Spring Theme 🌸 */
+body.spring {
+  --primary-color: #27ae60; /* Emerald Green */
+  --secondary-color: #8e44ad; /* Wisteria Purple */
+  --accent-color: #f1c40f; /* Sunflower Yellow */
+  --background-color: #f0fff0; /* Honeydew */
+}
+
+/* Summer Theme ☀️ */
+body.summer {
+  --primary-color: #2980b9; /* Strong Blue */
+  --secondary-color: #f39c12; /* Bright Orange */
+  --accent-color: #1abc9c; /* Turquoise */
+  --background-color: #fef9e7; /* Light Yellow */
+}
+
+/* Fall Theme 🍂 */
+body.fall {
+  --primary-color: #d35400; /* Pumpkin Orange */
+  --secondary-color: #c0392b; /* Pomegranate Red */
+  --accent-color: #f1c40f; /* Muted Yellow */
+  --background-color: #fdf5e6; /* Old Lace White */
+}
+
+/* Winter Theme ❄️ (Default) */
+body.winter {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --accent-color: #e74c3c;
+  --background-color: #ecf0f1;
+}
+
+/***********************
+ * GENERAL & RESET
+ ***********************/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.7;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: background-color var(--transition-speed);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+
+section,
+article {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/***********************
+ * HEADER & NAVIGATION
+ ***********************/
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--surface-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .logo {
+  height: 50px;
+  width: auto;
+}
+.site-header h1 {
+  font-family: "font-effect-fire-animation", fire-animation  /* Use the new cursive font */
+  font-size: 2.2rem; /* Optional: Adjust size for the new font */
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.site-header nav a {
+  margin-left: 1.5rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-header nav a:hover {
+  color: var(--primary-color);
+  border-bottom-color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/***********************
+ * HERO SECTION
+ ***********************/
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 1rem;
+  color: ff0af
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  min-height: 50vh;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #BE5103 /* Dark overlay for text readability */
+}
+
+.hero h2,
+.hero p {
+  position: relative; /* Bring text above the overlay */
+  z-index: 1;
+  color: var(--text-light-color);
+    font-family: "Dancing Script", cursive; 
+    font-size: 2.2rem; 
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+/***********************
+ * DEVOTION & BIBLE FINDER
+ ***********************/
+#devotion,
+.bible-verse-finder {
+  text-align: center;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+#verse {
+  font-size: 1.2rem;
+  font-style: "Dancing Script", cursive; 
+  margin-bottom: 0.5rem;
+}
+
+#reference {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.search-bar input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  width: 300px;
+}
+
+.search-bar button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-color);
+  color: var(--text-light-color);
+  transition: background-color var(--transition-speed);
+}
+
+.search-bar button:hover {
+  background-color: #FF8C00
+}
+
+#bibleResult,
+#error-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  line-height: 1.8;
+}
+
+#bibleResult {
+  background-color: #eafaf1; /* Light green success background */
+  border-left: 5px solid var(--primary-color);
+  text-align: left;
+}
+
+#error-message {
+  background-color: #f9eaea; /* Light red error background */
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/***********************
+ * EVENT BANNER & CARDS
+ ***********************/
+#next-event-banner {
+  text-align: center;
+  background-color: var(--primary-color);
+  color: var(--text-light-color);
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+.event-card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+  border-left: 5px solid var(--secondary-color);
+  transition: all var(--transition-speed);
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.event-card h3 {
+  margin-top: 0;
+}
+
+.event-card .date {
+  font-weight: bold;
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.event-card .countdown {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* Event Card States */
+.event-card.past {
+  opacity: 0.6;
+  border-left-color: var(--border-color);
+}
+
+.event-card.past .countdown {
+  background-color: #f2f2f2;
+  color: #888;
+}
+
+.event-card.today {
+  border-left-color: var(--accent-color);
+}
+
+.event-card.today .countdown {
+  background-color: var(--accent-color);
+  color: var(--text-light-color);
+}
+
+/***********************
+ * DONATE SECTION
+ ***********************/
+#donate {
+  text-align: center;
+}
+
+.donate-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.donate-btn,
+.applepay-btn,
+input[type="submit"] {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.donate-btn:hover,
+input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button styles */
+input[value="Donate with PayPal"] {
+  background-color: #0070ba;
+  color: white;
+}
+a[href*="zellepay"] {
+  background-color: #6d1ed4;
+  color: white;
+}
+a[href*="paytm"] {
+  background-color: #00baf2;
+  color: white;
+}
+
+/***********************
+ * CONTACT & FOOTER
+ ***********************/
+#contact p {
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  background-color: var(--primary-color);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+}
+
+footer p:first-child {
+  font-style: italic;
+}
+
+/***********************
+ * RESPONSIVE DESIGN
+ ***********************/
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .site-header h1 {
+    margin: 0.5rem 0;
+  }
+
+  .site-header nav {
+    margin-top: 0.5rem;
+  }
+
+  .site-header nav a {
+    margin: 0 0.5rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .donate-buttons {
+    flex-direction: column;
+  }
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fdfdfd;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fdfdfd;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fdfdfd;
+  margin: 0;
+  padding: 0;
+}
+
