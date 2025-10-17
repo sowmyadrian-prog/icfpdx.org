@@ -70,7 +70,7 @@ function setSeasonTheme() {
   } else if ([8, 9, 10].includes(month)) {
     // September, October, November
     body.classList.add("fall");
-    if (hero) hero.style.backgroundImage = "url('pexels-pixabay-33109.jpg')";
+    if (hero) hero.style.backgroundImage = "url('fall-leaves.jpg.png')";
   } else {
     // December, January, February
     body.classList.add("winter");
