@@ -25,15 +25,14 @@ a { color: inherit; text-decoration: none; }
 
 /* ===========================
    Header (CENTER FIX)
-   - header-content is centered independent of logo.
-   - add left padding on header so the centered block doesn't collide with the logo.
+   - The header-content is centered in the header using absolute centering
+   - The logo is anchored to the left so it doesn't affect the centered title/nav
+   - On small screens the layout falls back to stacked flex so everything is readable
    =========================== */
 .site-header {
-  position: relative;
+  position: relative;           /* allow absolute centering of inner block */
   min-height: var(--header-height);
-  /* add left padding equal to the logo region (logo width + spacing)
-     this keeps visual centering against the page center */
-  padding: 12px 24px 12px 170px;
+  padding: 12px 24px;
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88));
   box-shadow: var(--shadow);
@@ -84,7 +83,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 10;
 }
 
-/* Header content (title + nav) - centered within header using absolute centering */
+/* Header content (title + nav) - centered within header */
 .header-content {
   position: absolute;
   left: 50%;
@@ -96,10 +95,8 @@ a { color: inherit; text-decoration: none; }
   gap: 8px;
   text-align: center;
   z-index: 20;
-  /* allow the centered block to shrink on narrow viewports while preserving center */
-  width: min(900px, calc(100% - 220px));
+  width: min(820px, calc(100% - 220px)); /* allow space for logo on left; shrink on narrow viewports */
   max-width: 92%;
-  padding: 0 12px;
 }
 
 /* Brand title */
