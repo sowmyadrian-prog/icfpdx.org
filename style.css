@@ -202,10 +202,12 @@ section {
 }
 
 .site-header h1 {
-    font-size: 1.5rem;
-    margin: 0;
-    color: var(--text-color);
-    text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 2.2rem;
+  margin: 0;
+  color: var(--primary-color);
+  grid-column: 2; /* Puts the h1 in the middle column */
+  justify-self: center; /* Centers it within that column */
 }
 
 .site-header nav a {
