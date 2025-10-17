@@ -1,4 +1,5 @@
-
+/**
+ * India Christian Fellowship - Portland
  * Core JavaScript Logic (script.js)
  *
  * This script handles:
@@ -62,6 +63,10 @@ async function fetchDailyDevotion() {
     const verseEl = document.getElementById('verse');
     const referenceEl = document.getElementById('reference');
 
+    // --- OPTIMIZATION: Show loading state immediately to improve perceived speed ---
+    verseEl.textContent = "Loading Daily Verse...";
+    referenceEl.textContent = "Connecting to the Divine Source...";
+
     // System instruction requires a concise JSON object.
     const systemPrompt = "You are a Christian spiritual guide. Provide a single, inspiring Bible verse and its reference for a 'Daily Devotion'. Output the verse and reference in a JSON object with keys 'verse' and 'reference'.";
     const userQuery = "Provide today's daily devotion Bible verse.";
@@ -100,13 +105,15 @@ async function fetchDailyDevotion() {
 
         const devotion = JSON.parse(jsonText);
 
+        // Update with successful content
         verseEl.textContent = devotion.verse || "Error: Could not retrieve verse.";
         referenceEl.textContent = devotion.reference || "";
 
     } catch (error) {
         console.error("Failed to fetch daily devotion:", error);
+        // Update with error message
         verseEl.textContent = "Oops! We couldn't load today's devotion.";
-        referenceEl.textContent = "Please check your connection.";
+        referenceEl.textContent = "Please check your connection or try again later.";
     }
 }
 
@@ -307,15 +314,17 @@ window.addEventListener('load', () => {
     updateCountdowns();
     setInterval(updateCountdowns, 1000 * 60 * 60 * 6); // Update countdowns every 6 hours
 
-    // Inject a loading message element for the search finder
-    const finderSection = document.querySelector('.bible-verse-finder');
-    if (finderSection) {
-        const loadingMessageHtml = `
-            <div id="loading-message" class="panel" style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffc107; font-weight: bold; display: none; text-align: left;">
-                <i class="fas fa-spinner fa-spin"></i> Searching the Scriptures...
-            </div>
-        `;
-        // Append the new loading and error messages right after the search bar for visibility
-        finderSection.insertAdjacentHTML('beforeend', loadingMessageHtml);
+    // Inject a loading message element for the search finder (if it doesn't already exist)
+    if (!document.getElementById('loading-message')) {
+        const finderSection = document.querySelector('.bible-verse-finder');
+        if (finderSection) {
+            const loadingMessageHtml = `
+                <div id="loading-message" class="panel" style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffc107; font-weight: bold; display: none; text-align: left;">
+                    <i class="fas fa-spinner fa-spin"></i> Searching the Scriptures...
+                </div>
+            `;
+            // Append the new loading and error messages right after the search bar for visibility
+            finderSection.insertAdjacentHTML('beforeend', loadingMessageHtml);
+        }
     }
 });
