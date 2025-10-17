@@ -8,13 +8,13 @@
   --max-width: 1100px;
   --radius: 12px;
   --shadow: 0 10px 30px rgba(2,6,23,0.12);
-  --header-height: auto;
+  --header-height: 140px; /* header min height to allow centered absolute positioning */
 }
 
 /* Reset & base */
 * { box-sizing: border-box; }
 html,body { height: 100%; margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#fbf8ff 0%, #f6fbff 100%); color: #111; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-a { color: inherit; }
+a { color: inherit; text-decoration: none; }
 
 /* Layout wrapper */
 .site {
@@ -24,39 +24,40 @@ a { color: inherit; }
 }
 
 /* ===========================
-   Header (centered)
+   Header (CENTER FIX)
+   - The header-content is centered in the header using absolute centering
+   - The logo is anchored to the left so it doesn't affect the centered title/nav
+   - On small screens the layout falls back to stacked flex so everything is readable
    =========================== */
-/* The header is centered as a group on wide screens and stacked/centered on small screens */
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center the group horizontally */
-  gap: 18px;
-  padding: 14px;
+  position: relative;           /* allow absolute centering of inner block */
+  min-height: var(--header-height);
+  padding: 12px 24px;
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88));
   box-shadow: var(--shadow);
-  transform: translateZ(0);
-  flex-wrap: wrap; /* allow wrapping on narrow screens */
-  height: var(--header-height);
+  overflow: visible;
 }
 
-/* Logo block */
+/* Logo anchored to the left */
 .logo-wrap {
-  position: relative;
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 120px;
   height: 120px;
-  flex: 0 0 auto; /* do not stretch */
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  z-index: 30;
 }
 .logo {
   width: 100%;
-  height: 100%;
   max-width: 120px;
   max-height: 120px;
+  height: auto;
   object-fit: contain;
   border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.06);
@@ -67,7 +68,7 @@ a { color: inherit; }
 .logo:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(2,6,23,0.12); }
 .logo.is-loaded { animation: float 6s ease-in-out infinite; }
 
-/* Soft glow behind logo */
+/* Glow behind the logo (keeps relative to logo-wrap) */
 .logo-glow {
   position: absolute;
   left: 50%;
@@ -79,26 +80,33 @@ a { color: inherit; }
   background: radial-gradient(circle at 30% 30%, rgba(198,40,40,0.12), rgba(255,107,107,0.02) 40%, transparent 60%);
   pointer-events: none;
   opacity: 0.9;
+  z-index: 10;
 }
 
-/* Header content (title + nav) centered */
+/* Header content (title + nav) - centered within header */
 .header-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   display: flex;
   flex-direction: column;
-  align-items: center; /* center title and nav */
+  align-items: center;
   gap: 8px;
   text-align: center;
-  flex: 0 1 620px; /* allow it to shrink on small screens but not grow to take full width */
-  min-width: 260px;
+  z-index: 20;
+  width: min(820px, calc(100% - 220px)); /* allow space for logo on left; shrink on narrow viewports */
+  max-width: 92%;
 }
 
 /* Brand title */
 .brand {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.6rem;
   letter-spacing: 0.2px;
   font-weight: 700;
   color: #8a2e04;
+  line-height: 1;
 }
 .brand .sub {
   display: inline-block;
@@ -118,7 +126,6 @@ a { color: inherit; }
 }
 .main-nav a {
   color: var(--accent);
-  text-decoration: none;
   padding: 8px 12px;
   border-radius: 8px;
   font-weight: 600;
@@ -160,7 +167,6 @@ a { color: inherit; }
   background: transparent;
   cursor: pointer;
   font-weight: 700;
-  text-decoration: none;
   color: inherit;
 }
 .btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: 0 8px 28px rgba(198,40,40,0.12); }
@@ -240,28 +246,39 @@ footer { text-align: center; color: var(--muted); margin-top: 12px; font-size: 0
 }
 
 /* ===========================
-   Responsive
+   Responsive - fallback to stacked header
    =========================== */
 @media (max-width: 920px) {
   .site { padding: 16px; }
-  .logo-wrap { width: 100px; height: 100px; }
+  .logo-wrap { width: 100px; height: 100px; left: 14px; }
   .logo { max-width: 100px; max-height: 100px; }
-  .brand { font-size: 1.05rem; }
+  .brand { font-size: 1.2rem; }
   .hero-title { font-size: 1.6rem; }
 }
 
 @media (max-width: 720px) {
   /* stacked & centered header for small screens */
   .site-header {
+    display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    min-height: auto;
     padding: 12px;
   }
-  .header-content { align-items: center; text-align: center; width: 100%; }
-  .logo-wrap { width: 88px; height: 88px; }
+  .logo-wrap {
+    position: static;
+    transform: none;
+    width: 88px;
+    height: 88px;
+  }
   .logo { max-width: 88px; max-height: 88px; }
+  .header-content {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+  }
   .hero-title { font-size: 1.4rem; }
   .hero-ornament { display: none; }
 }
