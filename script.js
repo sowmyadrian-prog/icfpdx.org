@@ -67,7 +67,7 @@ function setSeasonTheme() {
     const month = now.getMonth(); // 0 (Jan) to 11 (Dec)
     let theme;
 
-    // Approximate Northern Hemisphere Seasons (Used to match your file naming convention)
+    // Approximate Northern Hemisphere Seasons
     if (month >= 2 && month <= 4) {
         // March (2) - May (4)
         theme = "spring";
@@ -136,6 +136,9 @@ function displayCountdown(elementId, targetDate, eventName) {
     const now = new Date().getTime();
     const distance = targetDate.getTime() - now;
     const element = document.getElementById(elementId);
+    
+    // Safety check: only proceed if the element exists in the HTML
+    if (!element) return;
 
     if (distance < 0) {
         element.textContent = `${eventName} is happening now!`;
@@ -149,7 +152,6 @@ function displayCountdown(elementId, targetDate, eventName) {
 
     element.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
-
 
 /***********************
  * BIBLE SEARCH
