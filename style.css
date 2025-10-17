@@ -166,6 +166,7 @@ iframe {
   color: var(--primary-color);
   border-bottom-color: var(--secondary-color);
   text-decoration: none;
+  text-align: center;
 }
 
 /***********************
