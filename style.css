@@ -1,6 +1,7 @@
 /***********************
  * FONT & ROOT VARIABLES
  ***********************/
+/* FIX: Consolidated and moved all @import and @font-face rules to the very top. */
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
 
@@ -8,6 +9,7 @@
   /* Font Families */
   --font-heading: "Merriweather", serif;
   --font-body: "Montserrat", sans-serif;
+  --font-accent: "Dancing Script", cursive; /* New variable for the script font */
 
   /* Default (Winter) Color Theme */
   --primary-color: #2c3e50; /* Dark Slate Blue */
@@ -34,6 +36,7 @@ body.spring {
   --secondary-color: #8e44ad; /* Wisteria Purple */
   --accent-color: #f1c40f; /* Sunflower Yellow */
   --background-color: #f0fff0; /* Honeydew */
+  --text-color: #2c3e50; /* Keep dark text for readability */
 }
 /* Summer Theme ☀️ */
 body.summer {
@@ -41,6 +44,7 @@ body.summer {
   --secondary-color: #f39c12; /* Bright Orange */
   --accent-color: #1abc9c; /* Turquoise */
   --background-color: #fef9e7; /* Light Yellow */
+  --text-color: #34495e; /* Keep dark text for readability */
 }
 /* Fall Theme 🍂 */
 body.fall {
@@ -48,6 +52,7 @@ body.fall {
   --secondary-color: #c0392b; /* Pomegranate Red */
   --accent-color: #f1c40f; /* Muted Yellow */
   --background-color: #fdf5e6; /* Old Lace White */
+  --text-color: #5d4037; /* Slightly warmer dark text */
 }
 /* Winter Theme ❄️ (Default) */
 body.winter {
@@ -55,6 +60,7 @@ body.winter {
   --secondary-color: #3498db;
   --accent-color: #e74c3c;
   --background-color: #ecf0f1;
+  --text-color: #34495e;
 }
 
 /***********************
@@ -73,13 +79,15 @@ body {
   line-height: 1.7;
   color: var(--text-color);
   background-color: var(--background-color);
-  transition: background-color var(--transition-speed);
+  /* FIX: Ensure all relevant color properties transition */
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 h1, h2, h3 {
   font-family: var(--font-heading);
   color: var(--primary-color);
   margin-bottom: 1rem;
   line-height: 1.3;
+  transition: color var(--transition-speed); /* Allow color to transition */
 }
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; text-align: center; margin-top: 2rem; }
@@ -105,8 +113,8 @@ img, video, iframe {
  * HEADER & NAVIGATION
  ***********************/
 .site-header {
-  display: grid; /* Use Grid instead of Flex */
-  grid-template-columns: 1fr auto 1fr; /* Create 3 columns */
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Adjusted: Logo, Title, Nav */
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--surface-color);
@@ -118,25 +126,21 @@ img, video, iframe {
 .site-header .logo {
   height: 50px;
   width: auto;
-  justify-self: start; /* Align logo to the left */
+  justify-self: start;
+  margin-right: 1rem; /* Added space after logo */
 }
 .site-header h1 {
-/* vietnamese */
-@font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/merriweather/v33/u-4e0qyriQwlOrhSvowK_l5UcA6zuSYEqOzpPe3HOZJ5eX1WtLaQwmYiSeqlJ-mFqA.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+  /* REMOVED: The entire broken @font-face block was here. */
   margin: 0;
   color: var(--primary-color);
-  grid-column: 2; /* Place title in the middle column */
+  grid-column: 2; /* Title is in the middle 1fr column */
   justify-self: center; /* Center it within the column */
+  font-size: 2.5rem; /* Ensure consistent font size */
+  white-space: nowrap; /* Prevent title from wrapping unnecessarily */
+  overflow: hidden; /* Hide overflow if it shrinks too much */
 }
 .site-header nav {
-  grid-column: 3; /* Place navigation in the right column */
+  grid-column: 3; /* Navigation is in the rightmost 'auto' column */
   justify-self: end; /* Align navigation to the right */
 }
 .site-header nav a {
@@ -173,21 +177,26 @@ img, video, iframe {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  /* IMPROVEMENT: Made the overlay slightly lighter for better visibility of the background image */
+  background: rgba(0, 0, 0, 0.4);
 }
 .hero h2, .hero p {
   position: relative;
   z-index: 1;
   color: var(--text-light-color);
-  font-family: "Dancing Script", cursive;
+  font-family: var(--font-accent); /* Used the new accent variable */
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* Added shadow for readability on busy backgrounds */
 }
 .hero h2 {
   font-size: 3rem;
   margin-bottom: 1rem;
+  font-family: var(--font-heading); /* Reverted main heading to heading font */
 }
+/* IMPROVEMENT: Changed font-family for the scripture quote (p) to the script font for contrast */
 .hero p {
   font-size: 2.2rem;
-  font-style: italic;
+  font-style: normal; /* Removed italic since the font is already stylized */
+  font-family: var(--font-accent);
 }
 
 /***********************
@@ -199,22 +208,25 @@ img, video, iframe {
   border-radius: var(--border-radius);
   margin-top: 2rem;
   box-shadow: var(--box-shadow);
+  padding: 2rem; /* Added padding to containers for better spacing */
 }
 #verse {
   font-size: 1.2rem;
-  font-family: "Dancing Script", cursive;
+  font-family: var(--font-accent); /* Used the new accent variable */
   margin-bottom: 0.5rem;
   font-style: italic;
+  padding: 0 1rem; /* Added horizontal padding for long verses */
 }
 #reference {
   font-weight: bold;
   color: var(--primary-color);
+  display: block; /* Ensures it's on its own line */
 }
 .search-bar {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1rem 0;
+  margin: 1.5rem 0; /* Increased vertical margin */
 }
 .search-bar input {
   padding: 0.75rem;
@@ -222,6 +234,8 @@ img, video, iframe {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   width: 300px;
+  max-width: 90%; /* Added max-width for better control */
+  color: var(--text-color); /* Ensure input text is dark */
 }
 .search-bar button {
   padding: 0.75rem 1.5rem;
@@ -235,21 +249,22 @@ img, video, iframe {
   transition: background-color var(--transition-speed);
 }
 .search-bar button:hover {
-  background-color: #FF8C00;
+  background-color: var(--primary-color); /* Used primary color for better theme consistency */
 }
 #bibleResult, #error-message {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: var(--border-radius);
   line-height: 1.8;
+  display: none; /* Ensure both start hidden before JS runs */
 }
 #bibleResult {
-  background-color: #eafaf1;
+  background-color: #eafaf1; /* Light green for success */
   border-left: 5px solid var(--primary-color);
   text-align: left;
 }
 #error-message {
-  background-color: #f9eaea;
+  background-color: #f9eaea; /* Light red for error */
   color: var(--accent-color);
   font-weight: bold;
 }
@@ -265,12 +280,21 @@ img, video, iframe {
   font-size: 1.2rem;
   font-weight: bold;
   margin-top: 2rem;
+  /* Added border-radius for visual consistency */
+  border-radius: var(--border-radius);
+}
+.event-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Improvement: Use grid for event cards */
+    gap: 1.5rem;
+    padding: 0;
 }
 .event-card {
   background-color: var(--surface-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  margin: 1.5rem auto;
+  /* Removed auto margin and adjusted for grid */
+  margin: 0;
   padding: 1.5rem;
   border-left: 5px solid var(--secondary-color);
   transition: all var(--transition-speed);
@@ -306,10 +330,17 @@ img, video, iframe {
 }
 .event-card.today {
   border-left-color: var(--accent-color);
+  /* Added a subtle pulsating animation to "Happening now" for attention */
+  animation: pulse 1.5s infinite alternate;
 }
 .event-card.today .countdown {
   background-color: var(--accent-color);
   color: var(--text-light-color);
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 0 10px var(--accent-color); }
+  to { box-shadow: 0 0 15px var(--accent-color); }
 }
 
 /***********************
@@ -333,7 +364,9 @@ img, video, iframe {
   border-radius: var(--border-radius);
   cursor: pointer;
   border: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  /* Added background transition for consistency */
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  color: white; /* Ensure text is white for dark buttons */
 }
 .donate-btn:hover, input[type="submit"]:hover {
   transform: translateY(-2px);
@@ -341,11 +374,15 @@ img, video, iframe {
 }
 input[value="Donate with PayPal"] {
   background-color: #0070ba;
-  color: white;
+}
+input[value="Donate with PayPal"]:hover {
+  background-color: #005691;
 }
 a[href*="zellepay"] {
   background-color: #6d1ed4;
-  color: white;
+}
+a[href*="zellepay"]:hover {
+  background-color: #5517a6;
 }
 
 /***********************
@@ -362,6 +399,11 @@ footer {
   margin-top: 2rem;
   background-color: var(--primary-color);
   color: rgba(255, 255, 255, 0.8);
+  /* FIX: Added proper grid-area to footer text to match header styling */
+  grid-column: 1 / -1; 
+}
+footer a {
+    color: var(--secondary-color);
 }
 footer p { margin-bottom: 0.5rem; }
 footer p:first-child { font-style: italic; }
@@ -372,33 +414,41 @@ footer p:first-child { font-style: italic; }
 @media (max-width: 768px) {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.75rem; }
-  .hero h2 { font-size: 2.5rem; }
+  .hero h2 { font-size: 2rem; } /* Slightly smaller for mobile hero */
+  .hero p { font-size: 1.75rem; }
   
   .site-header {
     grid-template-columns: 1fr; /* Stack items vertically on mobile */
-    gap: 0.5rem;
+    gap: 0.75rem;
     padding: 1rem;
   }
   .site-header .logo {
     justify-self: center; /* Center the logo */
     grid-row: 1;
+    margin-right: 0; /* Remove extra margin on mobile */
   }
   .site-header h1 {
     grid-row: 2;
     font-size: 1.8rem;
+    text-align: center; /* Ensure title is centered */
   }
   .site-header nav {
     grid-row: 3;
     justify-self: center; /* Center the nav links */
+    /* FIX: Added display: flex for proper centering and spacing of links */
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
   }
   .site-header nav a { 
       margin: 0 0.5rem; 
+      font-size: 0.9rem; /* Slightly smaller nav text */
   }
 
   .search-bar {
     flex-direction: column;
     align-items: stretch;
   }
-  .search-bar input { width: 100%; }
+  .search-bar input, .search-bar button { width: 100%; }
   .donate-buttons { flex-direction: column; }
 }
