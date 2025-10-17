@@ -179,6 +179,7 @@ section {
  * HEADER & NAVIGATION
  ***********************/
 .site-header {
+    text-align: center;
     background-color: var(--surface-color);
     box-shadow: var(--box-shadow);
     display: flex;
@@ -197,12 +198,14 @@ section {
     /* Adjust size as needed */
     margin-right: 1rem;
     border-radius: 4px; /* Added border radius for aesthetic consistency */
+    text-align: center;
 }
 
 .site-header h1 {
     font-size: 1.5rem;
     margin: 0;
     color: var(--text-color);
+    text-align: center;
 }
 
 .site-header nav a {
@@ -210,11 +213,13 @@ section {
     padding: 0.5rem;
     font-weight: 600;
     border-bottom: 2px solid transparent;
+    text-align: center;
 }
 
 .site-header nav a:hover {
     border-bottom: 2px solid var(--accent-color);
     color: var(--accent-color);
+    text-align: center;
 }
 
 /***********************
@@ -232,6 +237,7 @@ section {
 }
 
 .hero h2 {
+    text-align: center;
     font-family: var(--font-heading);
     font-size: 3rem;
     color: var(--text-light-color);
