@@ -3,499 +3,564 @@
  ***********************/
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+
 :root {
-  /* Font Families */
-  --font-heading: "Merriweather", serif;
-  --font-body: "Montserrat", sans-serif;
+    /* Font Families */a
+    --font-heading: "Merriweather", serif;
+    --font-body: "Montserrat", sans-serif;
 
-  /* Default (Winter) Color Theme */
-  --primary-color: #2c3e50; /* Dark Slate Blue */
-  --secondary-color: #3498db; /* Bright Blue */
-  --accent-color: #e74c3c; /* Festive Red */
-  --background-color: #ecf0f1; /* Light Gray */
-  --surface-color: #ffffff; /* White */
-  --text-color: #34495e; /* Dark Gray-Blue */
-  --text-light-color: #ffffff;
-  --border-color: #bdc3c7;
+    /* Default (Winter) Color Theme */
+    --primary-color: #2c3e50;
+    /* Dark Slate Blue */
+    --secondary-color: #3498db;
+    /* Bright Blue */
+    --accent-color: #e74c3c;
+    /* Festive Red */
+    --background-color: #ecf0f1;
+    /* Light Gray */
+    --surface-color: #ffffff;
+    /* White */
+    --text-color: #34495e;
+    /* Dark Gray-Blue */
+    --text-light-color: #ffffff;
+    --border-color: #bdc3c7;
 
-  /* Sizing & Effects */
-  --border-radius: 8px;
-  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  --transition-speed: 0.3s ease;
+    /* Sizing & Effects */
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s ease;
 }
 
 /***********************
  * SEASONAL THEMES
  ***********************/
 /* Spring Theme 🌸 */
-body.spring {
-  --primary-color: #27ae60; /* Emerald Green */
-  --secondary-color: #8e44ad; /* Wisteria Purple */
-  --accent-color: #f1c40f; /* Sunflower Yellow */
-  --background-color: #f0fff0; /* Honeydew */
+body[data-theme="spring"] {
+    --primary-color: #27ae60;
+    /* Emerald Green */
+    --secondary-color: #9b59b6;
+    /* Wisteria Purple */
+    --accent-color: #f1c40f;
+    /* Sunflower Yellow */
+    --background-color: #f7f9f9;
+    --surface-color: #ffffff;
+    --text-color: #2c3e50;
+    --border-color: #a9cce3;
 }
+/* Spring Hero Background */
+body[data-theme="spring"] .hero {
+    /* Placeholder for spring-blossoms.jpg */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://placehold.co/1200x400/27ae60/f7f9f9?text=SPRING+BLOSSOMS') center/cover no-repeat;
+}
+
 
 /* Summer Theme ☀️ */
-body.summer {
-  --primary-color: #2980b9; /* Strong Blue */
-  --secondary-color: #f39c12; /* Bright Orange */
-  --accent-color: #1abc9c; /* Turquoise */
-  --background-color: #fef9e7; /* Light Yellow */
+body[data-theme="summer"] {
+    --primary-color: #2980b9;
+    /* Strong Blue */
+    --secondary-color: #e67e22;
+    /* Bright Orange */
+    --accent-color: #1abc9c;
+    /* Turquoise */
+    --background-color: #f8f9f9;
+    --surface-color: #fefefe;
+    --text-color: #34495e;
+    --border-color: #bdc3c7;
+}
+/* Summer Hero Background */
+body[data-theme="summer"] .hero {
+    /* Placeholder for summer-floral.jpg.png */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://placehold.co/1200x400/2980b9/f8f9f9?text=SUMMER+FLORAL') center/cover no-repeat;
 }
 
-/* Fall Theme 🍂 */
-body.fall {
-  --primary-color: #d35400; /* Pumpkin Orange */
-  --secondary-color: #c0392b; /* Pomegranate Red */
-  --accent-color: #f1c40f; /* Muted Yellow */
-  --background-color: #fdf5e6; /* Old Lace White */
+/* Fall Theme 🍁 */
+body[data-theme="fall"] {
+    --primary-color: #d35400;
+    /* Pumpkin Orange */
+    --secondary-color: #c0392b;
+    /* Pomegranate Red */
+    --accent-color: #f39c12;
+    /* Muted Yellow */
+    --background-color: #faf5e6;
+    --surface-color: #ffffff;
+    --text-color: #5d5d5d;
+    --border-color: #e6b0aa;
+}
+/* Fall Hero Background */
+body[data-theme="fall"] .hero {
+    /* Placeholder for fall-leaves.jpg.png */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://placehold.co/1200x400/d35400/faf5e6?text=FALL+LEAVES') center/cover no-repeat;
 }
 
-/* Winter Theme ❄️ (Default) */
-body.winter {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
-  --accent-color: #e74c3c;
-  --background-color: #ecf0f1;
+/* Winter Theme (Default) ❄️ */
+body[data-theme="winter"] .hero,
+.hero { /* Fallback for default theme */
+    /* Placeholder for winter-snow.jpg.png */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1200x400/2c3e50/ecf0f1?text=WINTER+SNOW') center/cover no-repeat;
+    /* Box shadow added for visual depth */
+    box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.3);
 }
+
 
 /***********************
- * GENERAL & RESET
+ * GLOBAL STYLES
  ***********************/
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-body);
-  line-height: 1.7;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  transition: background-color var(--transition-speed);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-top: 60px;
+    /* Height of fixed header */
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading);
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  line-height: 1.3;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+    font-weight: 700;
 }
 
 h1 {
-  font-size: 2.5rem;
-}
-h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-h3 {
-  font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
-section,
-article {
-  padding: 2rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 1rem;
 }
 
 a {
-  color: var(--secondary-color);
-  text-decoration: none;
-  transition: color var(--transition-speed);
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
 }
 
 a:hover {
-  text-decoration: underline;
+    color: var(--accent-color);
 }
 
-img,
-video,
-iframe {
-  max-width: 100%;
-  height: auto;
-  display: block;
+section {
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /***********************
  * HEADER & NAVIGATION
  ***********************/
 .site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: var(--surface-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+    background-color: var(--surface-color);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 .site-header .logo {
-  height: 50px;
-  width: auto;
+    height: 40px;
+    /* Adjust size as needed */
+    margin-right: 1rem;
+    border-radius: 4px; /* Added border radius for aesthetic consistency */
 }
+
 .site-header h1 {
-  font-family: "font-effect-fire-animation", fire-animation  /* Use the new cursive font */
-  font-size: 2.2rem; /* Optional: Adjust size for the new font */
-  margin: 0;
-  color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text-color);
 }
 
 .site-header nav a {
-  margin-left: 1.5rem;
-  font-weight: 600;
-  padding: 0.5rem 0;
-  border-bottom: 2px solid transparent;
+    margin: 0 0.8rem;
+    padding: 0.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
 }
 
 .site-header nav a:hover {
-  color: var(--primary-color);
-  border-bottom-color: var(--secondary-color);
-  text-decoration: none;
+    border-bottom: 2px solid var(--accent-color);
+    color: var(--accent-color);
 }
 
 /***********************
  * HERO SECTION
  ***********************/
 .hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 5rem 1rem;
-  color: ff0af
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  min-height: 50vh;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #BE5103 /* Dark overlay for text readability */
-}
-
-.hero h2,
-.hero p {
-  position: relative; /* Bring text above the overlay */
-  z-index: 1;
-  color: var(--text-light-color);
-    font-family: "Dancing Script", cursive; 
-    font-size: 2.2rem; 
+    min-height: 400px;
+    color: var(--text-light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: background-image var(--transition-speed); /* Smooth transition on theme change */
 }
 
 .hero h2 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--text-light-color);
+    margin-bottom: 0.25rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Added text shadow for readability */
+}
+
+.hero h2::after {
+    display: none;
 }
 
 .hero p {
-  font-size: 1.25rem;
-  font-style: italic;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.25rem;
+    opacity: 0.9;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+/***********************
+ * DAILY DEVOTION
+ ***********************/
+#devotion {
+    background-color: var(--surface-color);
+    text-align: center;
+    padding: 3rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#devotion blockquote {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    border-left: 5px solid var(--secondary-color);
+}
+
+#devotion cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-color);
 }
 
 /***********************
- * DEVOTION & BIBLE FINDER
+ * BIBLE FINDER
  ***********************/
-#devotion,
 .bible-verse-finder {
-  text-align: center;
-  background-color: var(--surface-color);
-  border-radius: var(--border-radius);
-  margin-top: 2rem;
-  box-shadow: var(--box-shadow);
-}
-
-#verse {
-  font-size: 1.2rem;
-  font-style: "Dancing Script", cursive; 
-  margin-bottom: 0.5rem;
-}
-
-#reference {
-  font-weight: bold;
-  color: var(--primary-color);
+    text-align: center;
+    padding: 2rem 1rem;
 }
 
 .search-bar {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: 1rem auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
 }
 
-.search-bar input {
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  width: 300px;
+.search-bar input[type="text"] {
+    flex-grow: 1;
+    padding: 1rem;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--surface-color);
+    color: var(--text-color);
 }
 
 .search-bar button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--secondary-color);
-  color: var(--text-light-color);
-  transition: background-color var(--transition-speed);
+    background-color: var(--secondary-color);
+    color: var(--text-light-color);
+    padding: 1rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color var(--transition-speed);
 }
 
 .search-bar button:hover {
-  background-color: #FF8C00
+    background-color: var(--primary-color);
 }
 
-#bibleResult,
-#error-message {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  line-height: 1.8;
+.result-box,
+.error-box {
+    max-width: 600px;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: left;
+    box-shadow: var(--box-shadow);
+    display: none;
 }
 
-#bibleResult {
-  background-color: #eafaf1; /* Light green success background */
-  border-left: 5px solid var(--primary-color);
-  text-align: left;
+.result-box {
+    background-color: var(--surface-color);
+    border-left: 5px solid var(--secondary-color);
 }
 
-#error-message {
-  background-color: #f9eaea; /* Light red error background */
-  color: var(--accent-color);
-  font-weight: bold;
+.result-box strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.error-box {
+    background-color: #f4cccc;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+    border-left: 5px solid #cc0000;
 }
 
 /***********************
- * EVENT BANNER & CARDS
+ * EVENTS SECTION
  ***********************/
-#next-event-banner {
-  text-align: center;
-  background-color: var(--primary-color);
-  color: var(--text-light-color);
-  padding: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 2rem;
+#events {
+    background-color: var(--background-color);
+}
+
+.event-list {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .event-card {
-  background-color: var(--surface-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  margin: 1.5rem auto;
-  padding: 1.5rem;
-  border-left: 5px solid var(--secondary-color);
-  transition: all var(--transition-speed);
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    flex: 1 1 300px;
+    max-width: 400px;
+    text-align: center;
+    transition: transform var(--transition-speed);
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
 }
 
 .event-card h3 {
-  margin-top: 0;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
 }
 
-.event-card .date {
-  font-weight: bold;
-  color: var(--primary-color);
-  display: block;
-  margin-bottom: 0.5rem;
+.event-card p {
+    margin-bottom: 0.25rem;
 }
 
-.event-card .countdown {
-  display: block;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background-color: var(--background-color);
-  border-radius: var(--border-radius);
-  font-weight: bold;
-  color: var(--primary-color);
-  text-align: center;
+.event-card .location {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #6c757d;
 }
 
-/* Event Card States */
-.event-card.past {
-  opacity: 0.6;
-  border-left-color: var(--border-color);
+.countdown {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 1rem 0;
 }
 
-.event-card.past .countdown {
-  background-color: #f2f2f2;
-  color: #888;
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: background-color var(--transition-speed);
 }
 
-.event-card.today {
-  border-left-color: var(--accent-color);
-}
-
-.event-card.today .countdown {
-  background-color: var(--accent-color);
-  color: var(--text-light-color);
+.btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-light-color);
 }
 
 /***********************
  * DONATE SECTION
  ***********************/
 #donate {
-  text-align: center;
+    text-align: center;
+    background-color: var(--surface-color);
 }
 
 .donate-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 .donate-btn,
-.applepay-btn,
-input[type="submit"] {
-  display: inline-block;
-  padding: 0.8rem 1.8rem;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  border: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+.donate-buttons form input[type="submit"] {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+    text-transform: uppercase;
+    box-shadow: var(--box-shadow);
 }
 
 .donate-btn:hover,
-input[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.donate-buttons form input[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
-/* Specific button styles */
-input[value="Donate with PayPal"] {
-  background-color: #0070ba;
-  color: white;
+/* Specific styling for donation methods */
+a[href*="paypal"],
+.donate-buttons form input[type="submit"] {
+    background-color: #0070ba;
+    color: white;
 }
-a[href*="zellepay"] {
-  background-color: #6d1ed4;
-  color: white;
-}
-a[href*="paytm"] {
-  background-color: #00baf2;
-  color: white;
+
+a[href*="zelle"] {
+    background-color: #6300a8;
+    color: white;
 }
 
 /***********************
  * CONTACT & FOOTER
  ***********************/
+#contact {
+    padding-top: 2rem; /* Reduce top padding since it follows another section */
+    padding-bottom: 2rem;
+    background-color: var(--background-color); /* Differentiate background */
+}
+
+#contact h2 {
+    margin-bottom: 1rem;
+}
+
 #contact p {
-  text-align: center;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
 }
 
 footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  margin-top: 2rem;
-  background-color: var(--primary-color);
-  color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 footer p {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 footer p:first-child {
-  font-style: italic;
+    font-style: italic;
 }
 
 /***********************
  * RESPONSIVE DESIGN
  ***********************/
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.75rem;
-  }
-  .hero h2 {
-    font-size: 2.5rem;
-  }
+    h1 {
+        font-size: 2rem;
+    }
 
-  .site-header {
-    flex-direction: column;
-    text-align: center;
-  }
+    h2 {
+        font-size: 1.75rem;
+    }
 
-  .site-header h1 {
-    margin: 0.5rem 0;
-  }
+    .hero h2 {
+        font-size: 2.5rem;
+    }
 
-  .site-header nav {
-    margin-top: 0.5rem;
-  }
+    .site-header {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        position: static;
+        /* Make header static on small screens */
+    }
 
-  .site-header nav a {
-    margin: 0 0.5rem;
-  }
+    body {
+        padding-top: 0;
+    }
 
-  .search-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    .site-header h1 {
+        margin: 0.5rem 0;
+    }
 
-  .search-bar input {
-    width: 100%;
-  }
+    .site-header nav {
+        margin-top: 0.5rem;
+    }
 
-  .donate-buttons {
-    flex-direction: column;
-  }
+    .site-header nav a {
+        margin: 0 0.5rem;
+        padding: 0.25rem;
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 3rem 1rem;
+    }
+
+    .event-list {
+        gap: 1.5rem;
+    }
+
+    .donate-buttons {
+        flex-direction: column;
+    }
+
+    .donate-btn,
+    .donate-buttons form input[type="submit"] {
+        width: 80%;
+        margin: 0 auto;
+    }
 }
-
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fdfdfd;
-  margin: 0;
-  padding: 0;
-}
-
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fdfdfd;
-  margin: 0;
-  padding: 0;
-}
-
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fdfdfd;
-  margin: 0;
-  padding: 0;
-}
-
