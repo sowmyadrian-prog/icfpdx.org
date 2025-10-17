@@ -99,6 +99,7 @@ h2 {
 }
 h3 {
   font-size: 1.5rem;
+  text-align: center;
 }
 
 section,
@@ -144,12 +145,14 @@ iframe {
 .site-header .logo {
   height: 50px;
   width: auto;
+  text-align: center;
 }
 .site-header h1 {
   font-family: "font-effect-fire-animation", fire-animation  /* Use the new cursive font */
   font-size: 2.2rem; /* Optional: Adjust size for the new font */
   margin: 0;
   color: var(--primary-color);
+  text-align: center;
 }
 
 .site-header nav a {
