@@ -6,19 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fall">
   <div class="site">
     <header class="site-header" role="banner">
       <div class="logo-wrap" aria-hidden="false">
-        <!-- Primary logo src is the filename you said Git saved.
-             script.js will try fallbacks if this fails and animate it when found. -->
-        <img id="logoImg" class="logo" src="assetsicf-logo.png.png" alt="ICF Logo" />
+        <img id="logoImg" class="logo" src="assets/icf-logo.png" alt="ICF Logo" />
         <div class="logo-glow" aria-hidden="true"></div>
       </div>
-
       <div class="header-content">
         <h1 class="brand">India Christian Fellowship <span class="sub">— Portland</span></h1>
-
         <nav class="main-nav" aria-label="Main navigation">
           <a href="#home">Home</a>
           <a href="#devotion">Devotion</a>
@@ -123,24 +119,32 @@
             </div>
           </article>
         </div>
-
+        
         <h3 style="margin-top:18px">About ICF</h3>
         <video id="icfVideo" width="640" height="360" controls style="max-width:100%; border-radius:8px;">
           <source src="icf-intro.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
-
+        
         <div style="height:12px;"></div>
         <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id" style="border:0" width="100%" height="400" frameborder="0" scrolling="no" title="ICF Calendar"></iframe>
       </section>
-  <section id="donate">
-    <h2>Support ICF</h2>
-    <p><strong>Zelle (preferred):</strong> Send to <em>icfpdxtreasurer@gmail.com</em></p>
-    <p>Please consider supporting our ministry.</p>
-    <div class="donate-buttons">
-      <a href="https://enroll.zellepay.com/" target="_blank" class="donate-btn">Donate with Zelle</a>
-    </div>
-  </section>
+      
+      <section id="donate">
+        <h2>Support ICF</h2>
+        <p><strong>Zelle (preferred):</strong> Send to <em>icfpdxtreasurer@gmail.com</em></p>
+        <p>Please consider supporting our ministry.</p>
+        <div class="donate-buttons">
+          <a href="https://enroll.zellepay.com/" target="_blank" class="donate-btn">Donate with Zelle</a>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="your_paypal_id"> 
+            <input type="hidden" name="item_name" value="ICF Portland Ministry Support">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="submit" value="Donate with PayPal">
+          </form>
+        </div>
+      </section>
 
       <section id="contact" class="panel" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Contact Us</h2>
@@ -156,7 +160,6 @@
       <p>&copy; 2025 India Christian Fellowship – Portland</p>
     </footer>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
