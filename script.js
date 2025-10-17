@@ -1,330 +1,242 @@
+/***********************
+ * UTILITIES
+ ***********************/
 /**
- * India Christian Fellowship - Portland
- * Core JavaScript Logic (script.js)
- *
- * This script handles:
- * 1. Seasonal theming based on the current date.
- * 2. Real-time countdowns for all events listed on the page.
- * 3. Fetching a Daily Devotion verse via the Gemini API (structured JSON output).
- * 4. Searching for specific Bible passages via the Gemini API (grounded search).
+ * Simple validation for a Bible reference format (e.g., John 3:16).
+ * @param {string} reference - The raw text input.
+ * @returns {boolean} - True if the format is likely a valid reference.
  */
-
-// --- Global Constants and Configuration ---
-
-// API key is set to an empty string; the Canvas environment will provide the actual key at runtime.
-const API_KEY = "";
-const BASE_URL_GEMINI = "https://generativelanguage.googleapis.com/v1beta/models/";
-const MODEL_FLASH = "gemini-2.5-flash-preview-09-2025";
-const MAX_RETRIES = 5;
-
-// --- Utility Functions ---
-
-/**
- * Implements exponential backoff for API calls.
- * @param {Function} fetcher - The async function to execute.
- * @param {number} maxRetries - Maximum number of retries.
- * @returns {Promise<Response>}
- */
-async function fetchWithRetry(fetcher, maxRetries = MAX_RETRIES) {
-    for (let i = 0; i < maxRetries; i++) {
-        try {
-            const response = await fetcher();
-            if (response.ok) {
-                return response;
-            } else if (response.status === 429 && i < maxRetries - 1) {
-                // Rate limit hit (429), retry with exponential backoff
-                const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                console.warn(`Rate limit hit (429). Retrying in ${delay / 1000}s... (Attempt ${i + 1}/${maxRetries})`);
-                await new Promise(resolve => setTimeout(resolve, delay));
-            } else {
-                // Handle other non-rate-limit errors or final rate-limit failure
-                throw new Error(`API call failed with status: ${response.status} ${response.statusText}`);
-            }
-        } catch (error) {
-            if (i === maxRetries - 1) {
-                console.error("Fetch failed after all retries:", error);
-                throw error;
-            }
-            // If it's a network error, retry might still be necessary
-            const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-            console.warn(`Network error. Retrying in ${delay / 1000}s... (Attempt ${i + 1}/${maxRetries})`);
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
-    }
+function isValidReference(reference) {
+    // Regex for: optional number (1-3), book name (letters/spaces), chapter:verse
+    const simpleRegex = /^[1-3]?\s?[A-Za-z ]+\s\d{1,3}:\d{1,3}$/;
+    return simpleRegex.test(reference.trim());
 }
 
-
-// --- API Call Handlers (Gemini) ---
-
+/***********************
+ * DAILY DEVOTION
+ ***********************/
 /**
- * 1. Fetches a daily devotion verse using the Gemini API.
+ * Fetches and displays the daily Bible verse from the OurManna API.
+ * Uses a default verse on failure.
  */
-async function fetchDailyDevotion() {
-    const verseEl = document.getElementById('verse');
-    const referenceEl = document.getElementById('reference');
-
-    // --- OPTIMIZATION: Show loading state immediately to improve perceived speed ---
-    verseEl.textContent = "Loading Daily Verse...";
-    referenceEl.textContent = "Connecting to the Divine Source...";
-
-    // System instruction requires a concise JSON object.
-    const systemPrompt = "You are a Christian spiritual guide. Provide a single, inspiring Bible verse and its reference for a 'Daily Devotion'. Output the verse and reference in a JSON object with keys 'verse' and 'reference'.";
-    const userQuery = "Provide today's daily devotion Bible verse.";
-
-    const apiUrl = `${BASE_URL_GEMINI}${MODEL_FLASH}:generateContent?key=${API_KEY}`;
-    const payload = {
-        contents: [{ parts: [{ text: userQuery }] }],
-        systemInstruction: {
-            parts: [{ text: systemPrompt }]
-        },
-        generationConfig: {
-            responseMimeType: "application/json",
-            responseSchema: {
-                type: "OBJECT",
-                properties: {
-                    "verse": { "type": "STRING" },
-                    "reference": { "type": "STRING" }
-                },
-                "propertyOrdering": ["verse", "reference"]
-            }
-        }
-    };
-
-    try {
-        const fetcher = () => fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+function loadDailyVerse() {
+    fetch("https://beta.ourmanna.com/api/v1/get/?format=json")
+        .then((res) => res.json())
+        .then((data) => {
+            const verseObj = data.verse.details;
+            document.getElementById("verse").innerText = verseObj.text;
+            document.getElementById("reference").innerText = verseObj.reference;
+        })
+        .catch(() => {
+            // Fallback content if API fails
+            document.getElementById("verse").innerText =
+                "The Lord is my shepherd; I shall not want.";
+            document.getElementById("reference").innerText = "Psalm 23:1";
         });
-
-        const response = await fetchWithRetry(fetcher);
-        const result = await response.json();
-
-        const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!jsonText) throw new Error("API response was empty or malformed.");
-
-        const devotion = JSON.parse(jsonText);
-
-        // Update with successful content
-        verseEl.textContent = devotion.verse || "Error: Could not retrieve verse.";
-        referenceEl.textContent = devotion.reference || "";
-
-    } catch (error) {
-        console.error("Failed to fetch daily devotion:", error);
-        // Update with error message
-        verseEl.textContent = "Oops! We couldn't load today's devotion.";
-        referenceEl.textContent = "Please check your connection or try again later.";
-    }
 }
 
+/***********************
+ * HERO BANNER SCRIPTURE
+ ***********************/
+const banners = [
+    "“The Lord bless you and keep you.” – Numbers 6:24",
+    "“I am the way and the truth and the life.” – John 14:6",
+    "“Rejoice in the Lord always.” – Philippians 4:4",
+    "“Love one another.” – John 13:34",
+    "“The steadfast love of the Lord never ceases.” – Lamentations 3:22",
+];
+
 /**
- * 2. Searches for a specific Bible verse using the Gemini API with Google Search grounding.
- * @param {string} passage - The Bible passage to search for (e.g., "John 3:16").
+ * Loads a random scripture into the hero banner.
  */
-async function searchBibleVerse(passage) {
-    const resultEl = document.getElementById('bibleResult');
-    const errorEl = document.getElementById('error-message');
-    const loadingEl = document.getElementById('loading-message');
-
-    resultEl.textContent = '';
-    errorEl.style.display = 'none';
-    loadingEl.style.display = 'block';
-
-    // System instruction is simple for text transcription
-    const systemPrompt = "You are an accurate Bible transcription service. Given a Bible passage, return the exact text of that passage from the Bible (KJV or NIV). Only return the verse text.";
-    const userQuery = `Find the text for the Bible passage: ${passage}`;
-
-    const apiUrl = `${BASE_URL_GEMINI}${MODEL_FLASH}:generateContent?key=${API_KEY}`;
-    const payload = {
-        contents: [{ parts: [{ text: userQuery }] }],
-        tools: [{ "google_search": {} }], // Use Google Search for grounding
-        systemInstruction: {
-            parts: [{ text: systemPrompt }]
-        }
-    };
-
-    try {
-        const fetcher = () => fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const response = await fetchWithRetry(fetcher);
-        const result = await response.json();
-
-        loadingEl.style.display = 'none';
-
-        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-        
-        if (text && text.length > 5 && !text.includes('could not find') && !text.includes('sorry')) {
-            resultEl.innerHTML = `<strong>${passage}:</strong> ${text.trim()}`;
-        } else {
-            throw new Error("Could not find a valid verse for that passage.");
-        }
-
-    } catch (error) {
-        console.error("Failed to search Bible verse:", error);
-        loadingEl.style.display = 'none';
-        errorEl.textContent = `Error: Please check the passage (${passage}) or connection.`;
-        errorEl.style.display = 'block';
-    }
+function loadBanner() {
+    const heroP = document.querySelector(".hero p");
+    const randomIndex = Math.floor(Math.random() * banners.length);
+    heroP.innerText = banners[randomIndex];
 }
 
+/***********************
+ * SEASONAL THEME SWITCH
+ ***********************/
 /**
- * 3. Sets up the event listener for the Bible Verse Finder section.
+ * Determines the current season based on the month and sets the corresponding
+ * data-theme attribute on the body element. CSS handles the visual changes.
  */
-function setupVerseFinder() {
-    const searchBtn = document.getElementById('searchBtn');
-    const searchInput = document.getElementById('bibleSearch');
+function setSeasonTheme() {
+    const now = new Date();
+    const month = now.getMonth(); // 0 (Jan) to 11 (Dec)
+    let theme;
 
-    const handleSearch = () => {
-        const passage = searchInput.value.trim();
-        if (passage) {
-            searchBibleVerse(passage);
-        } else {
-            document.getElementById('error-message').textContent = 'Please enter a passage (e.g., John 3:16).';
-            document.getElementById('error-message').style.display = 'block';
-            document.getElementById('bibleResult').textContent = '';
-        }
-    };
-
-    searchBtn.addEventListener('click', handleSearch);
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    });
-}
-
-// --- Date and Time Handlers ---
-
-/**
- * 4. Applies a seasonal theme class to the body element.
- */
-function setSeasonalTheme() {
-    const month = new Date().getMonth();
-    let themeClass = 'winter';
-
-    // Months are 0-indexed (0=Jan, 11=Dec)
-    if (month >= 2 && month <= 4) { // March (2) to May (4)
-        themeClass = 'spring';
-    } else if (month >= 5 && month <= 7) { // June (5) to August (7)
-        themeClass = 'summer';
-    } else if (month >= 8 && month <= 10) { // September (8) to November (10)
-        themeClass = 'fall';
+    // Approximate Northern Hemisphere Seasons (Used to match your file naming convention)
+    if (month >= 2 && month <= 4) {
+        // March (2) - May (4)
+        theme = "spring";
+    } else if (month >= 5 && month <= 7) {
+        // June (5) - August (7)
+        theme = "summer";
+    } else if (month >= 8 && month <= 10) {
+        // September (8) - November (10)
+        theme = "fall";
+    } else {
+        // December (11) - February (1)
+        theme = "winter";
     }
-    // December (11), January (0), February (1) are winter (default)
 
-    document.body.className = themeClass;
+    // This attribute triggers the theme styles defined in the CSS
+    document.body.setAttribute("data-theme", theme);
 }
 
+/***********************
+ * EVENT COUNTDOWN
+ ***********************/
 /**
- * 5. Updates the countdown for all event cards on the page.
+ * Calculates the time until the next recurring event (Sunday Worship and Friday Prayer).
  */
 function updateCountdowns() {
     const now = new Date();
-    const eventCards = document.querySelectorAll('.event-card');
-    let nextEvent = null;
-    let nextEventTimeDiff = Infinity;
-    const today = now.toDateString();
+    const currentDay = now.getDay(); // 0: Sunday, 1: Monday, ..., 5: Friday, 6: Saturday
 
-    eventCards.forEach(card => {
-        const dateStr = card.getAttribute('data-date');
-        const eventDate = new Date(dateStr);
-        const countdownEl = card.querySelector('.countdown');
-        const timeDiff = eventDate.getTime() - now.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        const eventDateString = eventDate.toDateString();
-
-        card.classList.remove('past', 'today');
-
-        if (timeDiff <= 0) {
-            // Event is in the past or currently happening
-            countdownEl.textContent = "Event Concluded";
-            card.classList.add('past');
-        } else {
-            // Event is in the future
-            let displayString = '';
-            if (daysDiff === 0) {
-                 displayString = "Happening TODAY!";
-                 card.classList.add('today');
-            } else if (daysDiff === 1) {
-                 displayString = "Tomorrow!";
-            } else {
-                 displayString = `in ${daysDiff} days`;
-            }
-            countdownEl.textContent = displayString;
-
-            // Track the next upcoming event
-            if (timeDiff < nextEventTimeDiff) {
-                nextEventTimeDiff = timeDiff;
-                nextEvent = {
-                    title: card.querySelector('h3').textContent,
-                    date: eventDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),
-                    days: daysDiff
-                };
-            }
-        }
-    });
-
-    // Update the next event banner
-    const bannerEl = document.getElementById('next-event-banner');
-    if (nextEvent) {
-        bannerEl.innerHTML = `
-            📅 Next Event: <strong>${nextEvent.title}</strong> on ${nextEvent.date}
-            <span style="font-size:0.9em; font-weight:normal;">(${nextEvent.days > 0 ? 'in ' + nextEvent.days + ' days' : 'TODAY'})</span>
-        `;
-    } else {
-        bannerEl.textContent = "No upcoming events scheduled.";
+    // 1. Sunday Worship: Every Sunday, 10:30 AM
+    let nextWorship = new Date(now);
+    let daysUntilNextSunday = (7 - currentDay) % 7;
+    // Check if worship already passed today (Sunday)
+    if (daysUntilNextSunday === 0 && (now.getHours() > 10 || (now.getHours() === 10 && now.getMinutes() >= 30))) {
+        daysUntilNextSunday = 7; // Set to next week
+    } else if (daysUntilNextSunday === 0) {
+        daysUntilNextSunday = 0; // Target today
     }
+    nextWorship.setDate(now.getDate() + daysUntilNextSunday);
+    nextWorship.setHours(10, 30, 0, 0); // 10:30 AM
+
+    displayCountdown("worship-countdown", nextWorship, "Worship Service");
+
+
+    // 2. Friday Prayer: Every Friday, 7:00 PM
+    let nextPrayer = new Date(now);
+    let daysUntilNextFriday = (5 - currentDay + 7) % 7;
+    // Check if prayer meeting already passed today (Friday)
+    if (daysUntilNextFriday === 0 && (now.getHours() > 19 || (now.getHours() === 19 && now.getMinutes() >= 0))) {
+        daysUntilNextFriday = 7; // Set to next week
+    } else if (daysUntilNextFriday === 0) {
+        daysUntilNextFriday = 0; // Target today
+    }
+    nextPrayer.setDate(now.getDate() + daysUntilNextFriday);
+    nextPrayer.setHours(19, 0, 0, 0); // 7:00 PM
+
+    displayCountdown("prayer-countdown", nextPrayer, "Prayer Meeting");
 }
 
 /**
- * 6. Checks if the logo image loaded successfully.
+ * Calculates and displays the time difference to the target date.
+ * @param {string} elementId - ID of the element to update.
+ * @param {Date} targetDate - The date/time of the next event.
+ * @param {string} eventName - Name of the event.
  */
-function checkLogo() {
-    const logoImg = document.getElementById('logoImg');
-    const fallbackUrl = 'https://placehold.co/50x50/3498db/ffffff?text=ICF';
+function displayCountdown(elementId, targetDate, eventName) {
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+    const element = document.getElementById(elementId);
 
-    if (logoImg) {
-        logoImg.onerror = function() {
-            // Replace with a simple placeholder if the original image URL fails
-            logoImg.src = fallbackUrl;
-            logoImg.alt = 'ICF Logo Placeholder';
-            console.warn("Original logo image failed to load. Using a placeholder.");
-        };
+    if (distance < 0) {
+        element.textContent = `${eventName} is happening now!`;
+        return;
     }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    element.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
-// --- Initialization ---
 
-window.addEventListener('load', () => {
-    // 1. Initialize logic
-    setSeasonalTheme();
-    checkLogo();
+/***********************
+ * BIBLE SEARCH
+ ***********************/
+/**
+ * Handles the search functionality for Bible verses using the bible-api.com.
+ */
+function searchBible() {
+    const query = document.getElementById("bibleSearch").value.trim();
+    const resultBox = document.getElementById("bibleResult");
+    const errorBox = document.getElementById("bibleError");
 
-    // 2. Fetch API-dependent content
-    fetchDailyDevotion();
+    resultBox.style.display = "none";
+    errorBox.style.display = "none";
 
-    // 3. Setup user interactions
-    setupVerseFinder();
+    if (!query) {
+        errorBox.textContent = "Please enter a Bible reference (e.g., John 3:16).";
+        errorBox.style.display = "block";
+        return;
+    }
 
-    // 4. Initial update and set interval for real-time countdowns
+    // Simple common spelling/typo corrections before API call
+    const corrections = {
+        "philipians": "philippians",
+        "corinthians": "corinthians",
+        "revalation": "revelation",
+        "samual": "samuel",
+        "colosians": "colossians"
+        // Add more common typos as needed
+    };
+
+    let correctedQuery = query;
+    Object.keys(corrections).forEach((wrong) => {
+        // Global, case-insensitive replace
+        const regex = new RegExp(`\\b${wrong}\\b`, "gi");
+        correctedQuery = correctedQuery.replace(regex, corrections[wrong]);
+    });
+
+    fetch(`https://bible-api.com/${encodeURIComponent(correctedQuery)}`)
+        .then((res) => {
+            if (!res.ok) throw new Error("Verse not found or invalid reference.");
+            return res.json();
+        })
+        .then((data) => {
+            if (data.text) {
+                // Display the verse text, replacing newlines with <br> for HTML rendering
+                resultBox.innerHTML = `<strong>${data.reference}</strong><br>${data.text.replace(/\n/g, "<br>")}`;
+                resultBox.style.display = "block";
+            } else {
+                throw new Error("Could not retrieve verse text.");
+            }
+        })
+        .catch((err) => {
+            // Display error message
+            errorBox.textContent = `Error: ${err.message}`;
+            errorBox.style.display = "block";
+        });
+}
+
+/***********************
+ * INITIALIZE ON LOAD
+ ***********************/
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Initialize content and themes
+    loadDailyVerse(); // Load devotion
+    loadBanner(); // Load random scripture banner
+    setSeasonTheme(); // Set initial theme and hero background
+
+    // 2. Initialize and update countdowns
     updateCountdowns();
-    setInterval(updateCountdowns, 1000 * 60 * 60 * 6); // Update countdowns every 6 hours
+    // Update countdown timers every second
+    setInterval(updateCountdowns, 1000);
 
-    // Inject a loading message element for the search finder (if it doesn't already exist)
-    if (!document.getElementById('loading-message')) {
-        const finderSection = document.querySelector('.bible-verse-finder');
-        if (finderSection) {
-            const loadingMessageHtml = `
-                <div id="loading-message" class="panel" style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffc107; font-weight: bold; display: none; text-align: left;">
-                    <i class="fas fa-spinner fa-spin"></i> Searching the Scriptures...
-                </div>
-            `;
-            // Append the new loading and error messages right after the search bar for visibility
-            finderSection.insertAdjacentHTML('beforeend', loadingMessageHtml);
-        }
+    // 3. Set up Bible search listeners
+    const searchBtn = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("bibleSearch");
+
+    if (searchBtn) {
+        searchBtn.addEventListener("click", searchBible);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault(); // Prevent default action (like form submission)
+                searchBible();
+            }
+        });
     }
 });
