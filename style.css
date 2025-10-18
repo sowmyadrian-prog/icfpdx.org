@@ -349,6 +349,10 @@ a[href*="zellepay"] {
   margin-bottom: 0.5rem;
   text-align: center;
 }
+  contact p { margin-bottom: 0.5rem; }
+  contact p:first-child { font-style: italic; }
+  text-align: center;
+}
 footer {
   text-align: center;
   padding: 2rem 1rem;
