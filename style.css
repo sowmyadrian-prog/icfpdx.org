@@ -480,6 +480,40 @@ input[type="submit"] {
 #contact a:hover {
     color: #007bff; /* Change color on hover for links */
 }
+
+  /* ======================================= */
+/* FOOTER STYLES */
+/* ======================================= */
+
+footer {
+    /* Padding above and below for visual separation */
+    padding: 20px 0;
+    
+    /* Optional: Set a background color for the footer */
+    /* background-color: #f8f8f8; */
+    
+    /* Optional: Set a border at the top */
+    /* border-top: 1px solid #ccc; */
+    
+    /* === THE CENTERING FIX === */
+    /* This centers all inline and inline-block content (like the text and copyright) */
+    text-align: center;
+    /* ========================= */
+    
+    /* Optional: Ensure a good text color */
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Style for any links within the footer (like privacy policy, etc.) */
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
 /***********************
  * RESPONSIVE DESIGN
  ***********************/
