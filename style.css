@@ -357,9 +357,10 @@ footer {
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
 }
-footer p { margin-bottom: 0.5rem; }
-footer p:first-child { font-style: italic; }
-text-align: center;
+  footer p { margin-bottom: 0.5rem; }
+  footer p:first-child { font-style: italic; }
+  text-align: center;
+}
 
 /***********************
  * RESPONSIVE DESIGN
