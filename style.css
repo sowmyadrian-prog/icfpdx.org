@@ -344,7 +344,7 @@ a[href*="zellepay"] {
  * CONTACT & FOOTER
  ***********************/
 #contact { text-align: center; }
-#contact p {
+#contact p { text-align: center; }
   line-height: 1.5;
   margin-bottom: 0.5rem;
   text-align: center;
