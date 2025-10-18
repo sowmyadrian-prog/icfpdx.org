@@ -434,54 +434,40 @@ input[type="submit"] {
     background-color: #6d1ed4;
     color: white;
   }
-
 /* ======================================= */
 /* CONTACT US SECTION (#contact) STYLES */
 /* ======================================= */
 
 #contact {
-    /* Standard padding for spacing */
     padding: 60px 20px;
     
-    /* === FLEXBOX Centering: Recommended method for blocks === */
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center;    /* Centers items horizontally within the section */
+    /* Center text (heading, quote) that are direct children */
+    text-align: center; 
     
-    /* Fallback and for text lines */
-    text-align: center;
-    
-    /* Optional: Center the entire section block on wide screens */
+    /* Set a max-width and center the whole section on the page */
     max-width: 900px;
     margin: 0 auto;
     
-    /* Use your specific color for text if needed */
     color: #333; 
 }
 
-/* Style for the 'Contact Us' heading */
+/* 🎯 CRITICAL FIX: Center the block of contact information */
+.contact-info-wrapper {
+    /* Set a width so the element collapses around its content */
+    max-width: 400px; /* Adjust this width if needed */
+    
+    /* Centers the block element horizontally */
+    margin: 0 auto 20px auto; 
+    
+    /* Ensure text inside this block is aligned left (as shown in your screenshot) */
+    text-align: left; 
+}
+
 #contact h2 {
     font-size: 2.5em; 
     margin-bottom: 20px;
-    color: #cc6633; /* Use your existing color */
+    color: #cc6633; /* Your heading color */
 }
-
-/* CRITICAL FIX: Targets the text/info block (address, phone, email lines) 
-   to ensure it collapses around its content before being centered by the Flexbox parent. */
-#contact > * {
-    max-width: fit-content; 
-    align-self: center; 
-}
-
-#contact a {
-    color: #cc6633;
-    text-decoration: none;
-}
-
-#contact a:hover {
-    text-decoration: underline;
-}
-
 
 /* ======================================= */
 /* FOOTER STYLES */
@@ -490,11 +476,11 @@ input[type="submit"] {
 footer {
     padding: 20px 0;
     
-    /* === TEXT-ALIGN Centering: Standard method for footer text === */
+    /* === THE CENTERING FIX: Centers all inline content === */
     text-align: center;
-    /* ============================================================= */
+    /* ==================================================== */
     
-    background-color: #f5f5f5; /* Example light background */
+    background-color: #f5f5f5; 
     border-top: 1px solid #ccc;
     color: #555;
     font-size: 0.9em;
