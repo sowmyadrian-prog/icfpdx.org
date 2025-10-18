@@ -435,48 +435,51 @@ input[type="submit"] {
     color: white;
   }
 
-  /***********************
- * CONTACT & FOOTER
- ***********************/
-  #contact {
-    text-align: center;
-  }
+/* ======================================= */
+/* 7. CONTACT US SECTION (Assuming ID is 'contact') */
+/* ======================================= */
 
-  #contact p {
-    text-align: center;
-  }
+#contact {
+    /* Padding above and below the section for visual spacing */
+    padding: 60px 20px; 
+    
+    /* Set a maximum width for the content area */
+    max-width: 750px; 
+    
+    /* === THE CENTERING FIX === */
+    /* Center the block element (the whole section) on the page */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* Center all the inline text elements (address, phone, email) inside the block */
+    text-align: center; 
+    /* ========================= */
 
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
-  text-align: center;
+    /* Optional: If you want a different background for the section */
+    /* background-color: #f9f9f9; */
 }
 
-/* contact p { margin-bottom: 0.5rem; } */
-/* contact p:first-child { font-style: italic; } */
-contact {
-  text-align: center;
+/* Style for the 'Contact Us' heading */
+#contact h2 {
+    font-size: 2.5em; /* Adjust font size */
+    margin-bottom: 20px; /* Space below the heading */
+    color: #333; /* Dark text color */
+    text-align: center; /* Ensure the heading is centered */
 }
 
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  margin-top: 2rem;
-  background-color: var(--primary-color);
-  color: rgba(255, 255, 255, 0.8);
-  text-align: center;
+/* Style for the address and other contact details */
+#contact p,
+#contact a {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #555;
+    text-decoration: none; /* Remove underline from links */
 }
 
-footer p {
-  margin-bottom: 0.5rem;
+#contact a:hover {
+    color: #007bff; /* Change color on hover for links */
 }
-
-footer p:first-child {
-  font-style: italic;
-}
-
-text-align: center;
-}
-
 /***********************
  * RESPONSIVE DESIGN
  ***********************/
