@@ -10,12 +10,18 @@
   --font-body: "Montserrat", sans-serif;
 
   /* Default (Winter) Color Theme */
-  --primary-color: #2c3e50; /* Dark Slate Blue */
-  --secondary-color: #3498db; /* Bright Blue */
-  --accent-color: #e74c3c; /* Festive Red */
-  --background-color: #ecf0f1; /* Light Gray */
-  --surface-color: #ffffff; /* White */
-  --text-color: #34495e; /* Dark Gray-Blue */
+  --primary-color: #2c3e50;
+  /* Dark Slate Blue */
+  --secondary-color: #3498db;
+  /* Bright Blue */
+  --accent-color: #e74c3c;
+  /* Festive Red */
+  --background-color: #ecf0f1;
+  /* Light Gray */
+  --surface-color: #ffffff;
+  /* White */
+  --text-color: #34495e;
+  /* Dark Gray-Blue */
   --text-light-color: #ffffff;
   --border-color: #bdc3c7;
 
@@ -30,25 +36,40 @@
  ***********************/
 /* Spring Theme 🌸 */
 body.spring {
-  --primary-color: #27ae60; /* Emerald Green */
-  --secondary-color: #8e44ad; /* Wisteria Purple */
-  --accent-color: #f1c40f; /* Sunflower Yellow */
-  --background-color: #f0fff0; /* Honeydew */
+  --primary-color: #27ae60;
+  /* Emerald Green */
+  --secondary-color: #8e44ad;
+  /* Wisteria Purple */
+  --accent-color: #f1c40f;
+  /* Sunflower Yellow */
+  --background-color: #f0fff0;
+  /* Honeydew */
 }
+
 /* Summer Theme ☀️ */
 body.summer {
-  --primary-color: #2980b9; /* Strong Blue */
-  --secondary-color: #f39c12; /* Bright Orange */
-  --accent-color: #1abc9c; /* Turquoise */
-  --background-color: #fef9e7; /* Light Yellow */
+  --primary-color: #2980b9;
+  /* Strong Blue */
+  --secondary-color: #f39c12;
+  /* Bright Orange */
+  --accent-color: #1abc9c;
+  /* Turquoise */
+  --background-color: #fef9e7;
+  /* Light Yellow */
 }
+
 /* Fall Theme 🍂 */
 body.fall {
-  --primary-color: #d35400; /* Pumpkin Orange */
-  --secondary-color: #c0392b; /* Pomegranate Red */
-  --accent-color: #f1c40f; /* Muted Yellow */
-  --background-color: #fdf5e6; /* Old Lace White */
+  --primary-color: #d35400;
+  /* Pumpkin Orange */
+  --secondary-color: #c0392b;
+  /* Pomegranate Red */
+  --accent-color: #f1c40f;
+  /* Muted Yellow */
+  --background-color: #fdf5e6;
+  /* Old Lace White */
 }
+
 /* Winter Theme ❄️ (Default) */
 body.winter {
   --primary-color: #2c3e50;
@@ -65,9 +86,11 @@ body.winter {
   margin: 0;
   padding: 0;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   font-family: var(--font-body);
   line-height: 1.7;
@@ -75,27 +98,50 @@ body {
   background-color: var(--background-color);
   transition: background-color var(--transition-speed);
 }
-h1, h2, h3 {
+
+h1,
+h2,
+h3 {
   font-family: var(--font-heading);
   color: var(--primary-color);
   margin-bottom: 1rem;
   line-height: 1.3;
 }
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; text-align: center; margin-top: 2rem; }
-h3 { font-size: 1.5rem; }
-section, article {
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+section,
+article {
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
+
 a {
   color: var(--secondary-color);
   text-decoration: none;
   transition: color var(--transition-speed);
 }
-a:hover { text-decoration: underline; }
-img, video, iframe {
+
+a:hover {
+  text-decoration: underline;
+}
+
+img,
+video,
+iframe {
   max-width: 100%;
   height: auto;
   display: block;
@@ -105,8 +151,10 @@ img, video, iframe {
  * HEADER & NAVIGATION
  ***********************/
 .site-header {
-  display: grid; /* Use Grid instead of Flex */
-  grid-template-columns: 1fr auto 1fr; /* Create 3 columns */
+  display: grid;
+  /* Use Grid instead of Flex */
+  grid-template-columns: 1fr auto 1fr;
+  /* Create 3 columns */
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--surface-color);
@@ -115,29 +163,39 @@ img, video, iframe {
   top: 0;
   z-index: 100;
 }
+
 .site-header .logo {
   height: 150px;
   width: auto;
-  justify-self: start; /* Align logo to the left */
+  justify-self: start;
+  /* Align logo to the left */
 }
+
 .site-header h1 {
   font-family: "Dancing Script", cursive;
   font-size: 2.2rem;
   margin: 0;
   color: var(--primary-color);
-  grid-column: 2; /* Place title in the middle column */
-  justify-self: center; /* Center it within the column */
+  grid-column: 2;
+  /* Place title in the middle column */
+  justify-self: center;
+  /* Center it within the column */
 }
+
 .site-header nav {
-  grid-column: 3; /* Place navigation in the right column */
-  justify-self: end; /* Align navigation to the right */
+  grid-column: 3;
+  /* Place navigation in the right column */
+  justify-self: end;
+  /* Align navigation to the right */
 }
+
 .site-header nav a {
   margin-left: 1.5rem;
   font-weight: 600;
   padding: 0.5rem 0;
   border-bottom: 2px solid transparent;
 }
+
 .site-header nav a:hover {
   color: var(--primary-color);
   border-bottom-color: var(--secondary-color);
@@ -159,6 +217,7 @@ img, video, iframe {
   position: relative;
   min-height: 50vh;
 }
+
 .hero::before {
   content: "";
   position: absolute;
@@ -166,18 +225,23 @@ img, video, iframe {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  background: rgba(0, 0, 0, 0.5);
+  /* Dark overlay for readability */
 }
-.hero h2, .hero p {
+
+.hero h2,
+.hero p {
   position: relative;
   z-index: 1;
   color: var(--text-light-color);
   font-family: "Dancing Script", cursive;
 }
+
 .hero h2 {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
 .hero p {
   font-size: 2.2rem;
   font-style: italic;
@@ -186,29 +250,34 @@ img, video, iframe {
 /***********************
  * DEVOTION & BIBLE FINDER
  ***********************/
-#devotion, .bible-verse-finder {
+#devotion,
+.bible-verse-finder {
   text-align: center;
   background-color: var(--surface-color);
   border-radius: var(--border-radius);
   margin-top: 2rem;
   box-shadow: var(--box-shadow);
 }
+
 #verse {
   font-size: 1.2rem;
   font-family: "Dancing Script", cursive;
   margin-bottom: 0.5rem;
   font-style: italic;
 }
+
 #reference {
   font-weight: bold;
   color: var(--primary-color);
 }
+
 .search-bar {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
   margin: 1rem 0;
 }
+
 .search-bar input {
   padding: 0.75rem;
   font-size: 1rem;
@@ -216,6 +285,7 @@ img, video, iframe {
   border-radius: var(--border-radius);
   width: 300px;
 }
+
 .search-bar button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -227,20 +297,25 @@ img, video, iframe {
   color: var(--text-light-color);
   transition: background-color var(--transition-speed);
 }
+
 .search-bar button:hover {
   background-color: #FF8C00;
 }
-#bibleResult, #error-message {
+
+#bibleResult,
+#error-message {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: var(--border-radius);
   line-height: 1.8;
 }
+
 #bibleResult {
   background-color: #eafaf1;
   border-left: 5px solid var(--primary-color);
   text-align: left;
 }
+
 #error-message {
   background-color: #f9eaea;
   color: var(--accent-color);
@@ -259,6 +334,7 @@ img, video, iframe {
   font-weight: bold;
   margin-top: 2rem;
 }
+
 .event-card {
   background-color: var(--surface-color);
   border-radius: var(--border-radius);
@@ -268,17 +344,23 @@ img, video, iframe {
   border-left: 5px solid var(--secondary-color);
   transition: all var(--transition-speed);
 }
+
 .event-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-.event-card h3 { margin-top: 0; }
+
+.event-card h3 {
+  margin-top: 0;
+}
+
 .event-card .date {
   font-weight: bold;
   color: var(--primary-color);
   display: block;
   margin-bottom: 0.5rem;
 }
+
 .event-card .countdown {
   display: block;
   margin-top: 1rem;
@@ -289,17 +371,21 @@ img, video, iframe {
   color: var(--primary-color);
   text-align: center;
 }
+
 .event-card.past {
   opacity: 0.6;
   border-left-color: var(--border-color);
 }
+
 .event-card.past .countdown {
   background-color: #f2f2f2;
   color: #888;
 }
+
 .event-card.today {
   border-left-color: var(--accent-color);
 }
+
 .event-card.today .countdown {
   background-color: var(--accent-color);
   color: var(--text-light-color);
@@ -308,7 +394,10 @@ img, video, iframe {
 /***********************
  * DONATE SECTION
  ***********************/
-#donate { text-align: center; }
+#donate {
+  text-align: center;
+}
+
 .donate-buttons {
   display: flex;
   justify-content: center;
@@ -317,7 +406,9 @@ img, video, iframe {
   gap: 1rem;
   margin-top: 1.5rem;
 }
-.donate-btn, input[type="submit"] {
+
+.donate-btn,
+input[type="submit"] {
   display: inline-block;
   padding: 0.8rem 1.8rem;
   font-size: 1rem;
@@ -327,33 +418,45 @@ img, video, iframe {
   cursor: pointer;
   border: none;
   transition: transform 0.2s, box-shadow 0.2s;
-.donate-btn:hover, input[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-input[value="Donate with PayPal"] {
-  background-color: #0070ba;
-  color: white;
-}
-a[href*="zellepay"] {
-  background-color: #6d1ed4;
-  color: white;
-}
 
-/***********************
+  .donate-btn:hover,
+  input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  input[value="Donate with PayPal"] {
+    background-color: #0070ba;
+    color: white;
+  }
+
+  a[href*="zellepay"] {
+    background-color: #6d1ed4;
+    color: white;
+  }
+
+  /***********************
  * CONTACT & FOOTER
  ***********************/
-#contact { text-align: center; }
-#contact p { text-align: center; }
+  #contact {
+    text-align: center;
+  }
+
+  #contact p {
+    text-align: center;
+  }
+
   line-height: 1.5;
   margin-bottom: 0.5rem;
   text-align: center;
 }
-  /* contact p { margin-bottom: 0.5rem; } */
-  /* contact p:first-child { font-style: italic; } */
+
+/* contact p { margin-bottom: 0.5rem; } */
+/* contact p:first-child { font-style: italic; } */
 contact {
- text-align: center;
+  text-align: center;
 }
+
 footer {
   text-align: center;
   padding: 2rem 1rem;
@@ -362,45 +465,74 @@ footer {
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
 }
-  footer p { margin-bottom: 0.5rem; }
-  footer p:first-child { font-style: italic; }
-  text-align: center;
+
+footer p {
+  margin-bottom: 0.5rem;
+}
+
+footer p:first-child {
+  font-style: italic;
+}
+
+text-align: center;
 }
 
 /***********************
  * RESPONSIVE DESIGN
  ***********************/
 @media (max-width: 768px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.75rem; }
-  .hero h2 { font-size: 2.5rem; }
-  
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+
   .site-header {
-    grid-template-columns: 1fr; /* Stack items vertically on mobile */
+    grid-template-columns: 1fr;
+    /* Stack items vertically on mobile */
     gap: 0.5rem;
     padding: 1rem;
   }
+
   .site-header .logo {
-    justify-self: center; /* Center the logo */
+    justify-self: center;
+    /* Center the logo */
     grid-row: 1;
   }
+
   .site-header h1 {
     grid-row: 2;
     font-size: 1.8rem;
-    justify-self: center; /* THIS IS THE FIX */
+    justify-self: center;
+    /* THIS IS THE FIX */
   }
+
   .site-header nav {
     grid-row: 3;
-    justify-self: center; /* Center the nav links */
+    justify-self: center;
+    /* Center the nav links */
   }
-  .site-header nav a { 
-      margin: 0 0.5rem; 
+
+  .site-header nav a {
+    margin: 0 0.5rem;
   }
 
   .search-bar {
     flex-direction: column;
     align-items: stretch;
   }
-  .search-bar input { width: 100%; }
-  .donate-buttons { flex-direction: column; }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .donate-buttons {
+    flex-direction: column;
+  }
 }
