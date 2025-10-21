@@ -116,7 +116,7 @@ img, video, iframe {
   z-index: 100;
 }
 .site-header .logo {
-  height: 50px;
+  height: 150px;
   width: auto;
   justify-self: start; 
 }
